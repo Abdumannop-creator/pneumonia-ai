@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="uz" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI yordamida pnevmoniya aniqlash dasturi — rentgen tasvirlarini avtomatik tahlil qilish, kasallik darajasini baholash va diagnostik tavsiyalar">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>Pneumonia AI — Sun'iy Intellekt Diagnostikasi</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫁</text></svg>">
+</head>
+<body>
+
+    <!-- ═══ Header ═══ -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-icon">🫁</div>
+            <div class="header-text">
+                <h1>Pneumonia AI Diagnostika</h1>
+                <p>Sun'iy intellekt yordamida pnevmoniyani erta aniqlash tizimi</p>
+            </div>
+            <div class="header-badge">
+                <span class="dot"></span>
+                <span>Tizim faol</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ═══ Upload Section ═══ -->
+        <section class="upload-section" id="upload-section">
+            <div class="section-title">
+                <div class="icon">📤</div>
+                <h2>Rentgen Tasvirni Yuklang</h2>
+                <span class="subtitle">Qo'llab-quvvatlanadigan formatlar: JPEG, PNG, BMP, TIFF</span>
+            </div>
+
+            <div class="card">
+                <div class="upload-zone" id="upload-zone">
+                    <span class="upload-icon">🩻</span>
+                    <h3>Rentgen tasvirni shu yerga tashlang</h3>
+                    <p>yoki quyidagi tugmani bosing</p>
+                    <button class="browse-btn" type="button">📁 Faylni tanlash</button>
+                    <input type="file" id="upload-input" class="upload-input" accept="image/*,.dcm">
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-area" id="preview-area">
+                    <img src="" alt="Ko'rib chiqish" class="preview-thumb" id="preview-thumb">
+                    <div class="preview-info">
+                        <div class="filename" id="preview-filename">—</div>
+                        <div class="filesize" id="preview-filesize">—</div>
+                    </div>
+                    <button class="analyze-btn" id="analyze-btn" disabled>
+                        <span class="spinner"></span>
+                        <span class="btn-text">🔬 Tahlil qilish</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ Results Section ═══ -->
+        <section class="results-section" id="results-section">
+            <div class="section-title">
+                <div class="icon">📊</div>
+                <h2>Diagnostika Natijalari</h2>
+            </div>
+
+            <div class="results-grid">
+
+                <!-- Diagnosis Card -->
+                <div class="card diagnosis-card normal" id="diagnosis-card">
+                    <div class="diagnosis-label">
+                        <span class="diagnosis-badge normal" id="diagnosis-badge">✓ NORMAL</span>
+                        <span class="severity-text" id="severity-text"></span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-confidence">—</div>
+                            <div class="stat-label">Ishonch darajasi</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-affected">—</div>
+                            <div class="stat-label">Shikast. hudud</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-prob-normal" style="color: var(--accent-green)">—</div>
+                            <div class="stat-label">Normal eht.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-prob-pneumonia" style="color: var(--accent-red)">—</div>
+                            <div class="stat-label">Pnevmoniya eht.</div>
+                        </div>
+                    </div>
+
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar-label">
+                            <span>Ishonch darajasi</span>
+                            <span id="model-name">—</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill normal" id="confidence-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Comparison -->
+                <div class="card image-comparison">
+                    <div class="image-tabs">
+                        <button class="image-tab active" id="tab-original">🩻 Asl tasvir</button>
+                        <button class="image-tab" id="tab-heatmap">🔥 Heatmap (AI)</button>
+                    </div>
+                    <div class="image-display">
+                        <img src="" alt="Asl rentgen tasvir" id="original-image" style="display: none">
+                        <img src="" alt="Grad-CAM heatmap" id="heatmap-image" style="display: none">
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card recommendations-card">
+                    <h3>📋 Diagnostik Tavsiyalar</h3>
+                    <ul class="rec-list" id="rec-list">
+                        <!-- Dynamically populated -->
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══ History Section ═══ -->
+        <section class="history-section" id="history-section">
+            <div class="section-title">
+                <div class="icon">🕐</div>
+                <h2>Tahlillar Tarixi</h2>
+                <span class="subtitle">Oxirgi 20 ta natija</span>
+            </div>
+
+            <div class="card">
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Sana</th>
+                                <th>Natija</th>
+                                <th>Ishonch</th>
+                                <th>Daraja</th>
+                                <th>Model</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="history-empty" id="history-empty">
+                    <span class="icon">📭</span>
+                    <p>Hali hech qanday tahlil o'tkazilmagan</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+        <p>© 2026 Pneumonia AI — Sun'iy intellekt asosida tibbiy diagnostika tizimi</p>
+        <p style="margin-top: 0.25rem; font-size: 0.75rem;">⚕️ Ushbu tizim shifokorga yordam vositasi sifatida ishlatiladi. Yakuniy tashxis shifokor tomonidan qo'yiladi.</p>
+    </footer>
+
+    <!-- ═══ Loading Overlay ═══ -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-brain">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="brain-icon">🧠</div>
+        </div>
+        <div class="loading-text">AI tasvir tahlilini amalga oshirmoqda...</div>
+        <div class="loading-subtext">Iltimos, kuting</div>
+    </div>
+
+    <!-- ═══ Toast ═══ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ═══ Scripts ═══ -->
+    <script src="/assets/js/app.js"></script>
+
+</body>
+</html>

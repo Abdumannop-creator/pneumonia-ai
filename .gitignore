@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Database
+backend/app.db
+
+# Media / Uploaded files
+backend/uploads/*
+!backend/uploads/heatmaps/  # empty folder placeholder
+backend/uploads/heatmaps/*
+
+# Models (too large for git)
+models/best_model.pt
+models/checkpoints/
+ml/models/checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

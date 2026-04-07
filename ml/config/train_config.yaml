@@ -1,0 +1,19 @@
+seed: 42
+data_dir: "data/chest_xray"
+img_size: 224
+batch_size: 16
+num_workers: 0
+
+epochs: 5
+lr: 0.0003
+weight_decay: 0.0001
+
+model_candidates:
+  - densenet121
+  - efficientnet_b0
+  - resnet50
+
+data_dir: "data/chest_xray"
+output_dir: "models/checkpoints"
+best_model_path: "models/best_model.pt"
+meta_path: "models/model_meta.json"
