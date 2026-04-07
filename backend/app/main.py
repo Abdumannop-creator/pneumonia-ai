@@ -1,5 +1,9 @@
 import sys
-import lzma
+try:
+    import lzma
+except ImportError:
+    lzma = None
+    sys.modules['lzma'] = None 
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
