@@ -1,4 +1,19 @@
 import sys
+from types import ModuleType
+
+# Mock lzma before any other imports to fix ModuleNotFoundError: No module named '_lzma'
+# This is required because torchvision and other ML libs import lzma internally.
+if "lzma" not in sys.modules:
+    lzma_mock = ModuleType("lzma")
+    lzma_mock.LZMAError = Exception
+    lzma_mock.CHECK_NONE = 0
+    lzma_mock.CHECK_CRC32 = 1
+    lzma_mock.CHECK_CRC64 = 4
+    lzma_mock.CHECK_SHA256 = 10
+    lzma_mock.open = lambda *args, **kwargs: None
+    
+    sys.modules["lzma"] = lzma_mock
+    sys.modules["_lzma"] = lzma_mock
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
